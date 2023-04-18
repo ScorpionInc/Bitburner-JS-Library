@@ -3,8 +3,8 @@ export async function main(ns) {
     // Defines the "target server", which is the server
     // that we're going to hack.
     const target = "server";
-	const minFundsPercentage = 0.85;
-	const maxSecurityLevelGained = 3;
+    const minFundsPercentage = 0.85;
+    const maxSecurityLevelGained = 3;
 
     // Defines how much money a server should have before we hack it
     // In this case, it is set to 75% of the server's max money
