@@ -54,6 +54,7 @@ export async function main(ns) {
 	}
 	dPrint("All scanner scripts have been synced to all targets.");
 
+	/* Disabled until I can figure it out.
 	//Filter Available Remote scanners by RAM
 	var scan_targets = [...targets];
 	for (var i = 0; i < scan_targets.length; i++) {
@@ -71,12 +72,17 @@ export async function main(ns) {
 		dPrint("Initiated " + scriptName + " on target server '" + scan_targets[i] + "'.");
 	}
 	dPrint("All remote scanner scripts have been executed.");
+	//*/
 
 	//Run si-pwn on all targets.
 	await ns.sleep(10000);
 	for (var i = 0; i < targets.length; i++) {
-		ns.run("" + pwnScriptName, 1, "" + targets[i]);//Wrong: , ["" + targets[i]]
+		var pwnPID = ns.run("" + pwnScriptName, 1, "" + targets[i]);//Wrong: , ["" + targets[i]]
 		dPrint("Running " + pwnScriptName + " against target: '" + targets[i] + "'.");
+		while (ns.isRunning(pwnPID, hostname, "" + targets[i])) {
+			//NOP until completed.
+			await ns.sleep(1000);
+		}
 	}
 
 	//Finished

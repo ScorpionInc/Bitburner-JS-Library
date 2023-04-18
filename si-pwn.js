@@ -5,6 +5,7 @@ export async function main(ns) {
 	const scriptName = "si-pwn.js";
 	const rooterScriptName = "si-rooter.js";
 	const farmerScriptName = "si-farmer.js";
+	const hostname = ns.getHostname();
 
 	//Debugging Function(s)
 	function dPrint(msg, prefix = "") {
@@ -54,7 +55,11 @@ export async function main(ns) {
 	}
 
 	//Root Check
-	ns.run("" + rooterScriptName, 1, "" + target);
+	var rooterPID = ns.run("" + rooterScriptName, 1, "" + target);
+	while(ns.isRunning(rooterPID, hostname, "" + target)) {
+		//NOP until completed.
+		await ns.sleep(1000);
+	}
 	var hasRoot = ns.hasRootAccess("" + target);
 	if (!hasRoot) {
 		dPrint("rooter script: '" + rooterScriptName + "' has failed to get root access. Aborting.");
