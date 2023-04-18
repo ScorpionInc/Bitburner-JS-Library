@@ -7,8 +7,8 @@ export async function main(ns) {
 	const targetHacknetCores = 4;//How many cores should each of those nodes have?
 	ns.disableLog("getServerMoneyAvailable");
 	function money() {
-        return ns.getServerMoneyAvailable("home");
-    }
+                return ns.getServerMoneyAvailable("home");
+        }
 	function canSpend(amount) {
 		return money() - amount > minimumBalance;
 	}
